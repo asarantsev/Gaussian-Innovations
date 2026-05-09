@@ -20,3 +20,5 @@ check-model.py is checking six-series model with the new valuation measure in
 
 https://my-finance.org/2026/05/09/improved-six-equation-model-selection/
 
+5model.py and 6model.py are printing all these chosen regressions in 5-series and 6-series model
+
