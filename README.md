@@ -22,3 +22,5 @@ https://my-finance.org/2026/05/09/improved-six-equation-model-selection/
 
 5model.py and 6model.py are printing all these chosen regressions in 5-series and 6-series model
 
+my_finance.py is a Python package when we take these simulated three series of annual returns for domestic stocks, international stocks, and domestic corporate bonds, as input, and create portfolio simulation based on that, and PDF/PNG graphs
+
