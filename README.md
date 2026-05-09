@@ -12,7 +12,7 @@ https://my-finance.org/2026/05/09/improved-selection-of-model/
 
 simplest.py is checking the simplest model where normalized stock returns are IID Gaussian and normalized differences of log bond rates are also IID Gaussian
 
-simulator.py is simulating this simplest model
+model0.py is simulating this simplest model
 
 data2025.xlsx is the data file 1927--2025
 
