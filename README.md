@@ -26,3 +26,12 @@ my_finance.py is a Python package when we take these simulated three series of a
 
 test0.py is when we import model0.py and my_finance.py and apply it to a simple example
 
+spreads.xlsx is the raw data for long-short spreads, including Federal Reserve of Economic Data sources 
+
+data2025-new.xlsx is the same data as in data2025.xlsx but including spread (only finalized data)
+
+data2025-new.py is checking whether spreads follows an autoregression of order 1, with or without normalizing innovations by volatility, with all possible combinations of coefficients. Unfortunately, we conclude that our models with spreads do not pass these tests which we imposed in this blog post:
+
+https://my-finance.org/2026/05/09/improved-selection-of-model/
+
+This is why we do not write any model with spreads. There is nothing to write here. I feel very disappointed at omitting such an important financial indicator. Maybe future research will show some improvement. 
