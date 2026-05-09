@@ -24,3 +24,5 @@ https://my-finance.org/2026/05/09/improved-six-equation-model-selection/
 
 my_finance.py is a Python package when we take these simulated three series of annual returns for domestic stocks, international stocks, and domestic corporate bonds, as input, and create portfolio simulation based on that, and PDF/PNG graphs
 
+test0.py is when we import model0.py and my_finance.py and apply it to a simple example
+
