@@ -103,7 +103,7 @@ print(RegVol.summary())
 print('Chosen model for bond rates')
 print(RegR1.summary())
 
-allResid = [RegU3.resid, RegI3.resid, RegR1.resid, RegVol.resid, RegL2.resid]
+allResid = [RegU3.resid, RegI3.resid, RegL2.resid, RegVol.resid, RegR1.resid]
 lengths = [len(res) for res in allResid]
 allNames = ['usa', 'intl', 'bonds', 'vol', 'rates']
 allResiduals = pd.DataFrame(columns = allNames)
