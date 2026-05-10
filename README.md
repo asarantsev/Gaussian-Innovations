@@ -14,6 +14,10 @@ simplest.py is checking the simplest model where normalized stock returns are II
 
 model0.py is simulating this simplest model
 
+model1.py is simulating the more complicated 5-series model
+
+model2.py is simulating the 6-series model
+
 data2025.xlsx is the data file 1927--2025
 
 check-model.py is checking six-series model with the new valuation measure in 
@@ -24,7 +28,7 @@ https://my-finance.org/2026/05/09/improved-six-equation-model-selection/
 
 my_finance.py is a Python package when we take these simulated three series of annual returns for domestic stocks, international stocks, and domestic corporate bonds, as input, and create portfolio simulation based on that, and PDF/PNG graphs
 
-test0.py is when we import model0.py and my_finance.py and apply it to a simple example
+test0.py is when we import model0.py, model1.py, model2.py, and my_finance.py, and apply it to three simple examples
 
 spreads.xlsx is the raw data for long-short spreads, including Federal Reserve of Economic Data sources 
 
