@@ -28,7 +28,7 @@ https://my-finance.org/2026/05/09/improved-six-equation-model-selection/
 
 my_finance.py is a Python package when we take these simulated three series of annual returns for domestic stocks, international stocks, and domestic corporate bonds, as input, and create portfolio simulation based on that, and PDF/PNG graphs
 
-test0.py is when we import model0.py, model1.py, model2.py, and my_finance.py, and apply it to three simple examples
+test0.py is when we import model0.py and my_finance.py, and apply it to a one example and test.py is importing model0.py, model1.py, model2.py, and my_finance.py, and apply it to three simple examples
 
 spreads.xlsx is the raw data for long-short spreads, including Federal Reserve of Economic Data sources 
 
