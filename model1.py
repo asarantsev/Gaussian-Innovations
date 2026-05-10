@@ -4,7 +4,7 @@ import numpy
 NSIMS = 400
 
 # covariance matrix of innovations 
-Sigma = (10**(-4)) * numpy.array([[3.897114, 2.470823, -41.524404, -1.216955, 0.175224], [2.470823, 4.786725, -43.786001, -1.314104, -0.058867], [-41.524404, -43.786001, 1338.685234, 14.895365, 1.379118], [-1.216955, -1.314104, 14.895365, 1.999587, -0.025363], [0.175224, -0.058867, 1.379118, -0.025363, 0.102879]])
+Sigma = (10**(-4)) * numpy.array([[2.218258, 0.948039, 0.215726, -6.113641, -0.210064], [0.948039, 2.975298, -0.000237, -5.399599, 0.036818], [0.215726, -0.000237, 0.113497, 2.754026, -0.050806], [-6.113641, -5.399599, 2.754026, 1338.685234, 14.068448], [-0.210064, 0.036818, -0.050806, 14.068448, 1.935904]])
 
 # The main simulation function
 # initialV and initialR are initial volatiltiy and rates
@@ -20,9 +20,10 @@ def sim(initialV, initialR, T):
     # split it into components corresponding to simulated series
     noiseUSA = noise[:, :, 0] # USA stock returns
     noiseIntl = noise[:, :, 1] # international stock returns
-    noiseVol = noise[:, :, 2] # volatility 
-    noiseRates = noise[:, :, 3] # corporate bond rates
-    noiseBonds = noise[:, :, 4] # corporate bond returns
+    noiseBonds = noise[:, :, 2] # corporate bond returns
+    noiseVol = noise[:, :, 3] # volatility 
+    noiseRates = noise[:, :, 4] # corporate bond rates
+    
     
     # now initialize the 2d arrays corresponding to simulated series
     simLVol = numpy.zeros((T+1, NSIMS))
@@ -45,14 +46,15 @@ def sim(initialV, initialR, T):
     
     # simulate log rates as heteroscedastic random walk
     for t in range(T):
-        simLRates[t + 1] = noiseRates[t] * simVol[t + 1] + simLRates[t]
+        simLRates[t + 1] = 0.0708 + (1 - 0.0411) * simLRates[t] + noiseRates[t] * simVol[t + 1] 
         
     # take exponents to get rates
     simRates = numpy.exp(simLRates)
     
     # simulate three series of returns 
     for t in range(T):
-        simRetUSA[t] = numpy.exp(simVol[t + 1] * (noiseUSA[t] + 0.014325 * numpy.ones(NSIMS))) - numpy.ones(NSIMS)
-        simRetIntl[t] = numpy.exp(simVol[t + 1] * (noiseIntl[t] + 0.013599 * numpy.ones(NSIMS))) - numpy.ones(NSIMS)
-        simRetBonds[t] = 0.01 * simRates[t] + numpy.exp(- 0.016269 * numpy.ones(NSIMS) - 0.062568 * (simRates[t+1] - simRates[t]) + simVol[t + 1] * noiseBonds[t]) - numpy.ones(NSIMS)
+        simRetUSA[t] = numpy.exp(0.2111 * numpy.ones(NSIMS) - 0.0107 * simVol[t+1] - 0.0621 * (simRates[t+1] - simRates[t]) + simVol[t + 1] * noiseUSA[t]) - numpy.ones(NSIMS)
+        simRetIntl[t] = numpy.exp(0.2684 * numpy.ones(NSIMS) - 0.018 * simVol[t+1] - 0.039 * (simRates[t+1] - simRates[t]) + simVol[t+1] * noiseIntl[t]) - numpy.ones(NSIMS)
+        simRetBonds[t] = 0.01 * simRates[t] + numpy.exp(- 0.0596 * (simRates[t+1] - simRates[t]) + simVol[t + 1] * noiseBonds[t]) - numpy.ones(NSIMS)
+    
     return [simRetUSA, simRetIntl, simRetBonds]

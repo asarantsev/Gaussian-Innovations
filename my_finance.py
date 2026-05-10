@@ -178,7 +178,7 @@ def setupText(initialWealth, initialFlow, growthFlow, timeHorizon, bondShare0, b
 # Write a legend for each path, and the overall legend
 # Including setup in the above function and the results
 
-def output(simReturns, initialW, initialFlow, growthFlow, timeHorizon, bondStart, bondEnd, intlShare):
+def output(simReturns, initialW, initialFlow, growthFlow, timeHorizon, bondStart, bondEnd, intlShare, fileName):
 
     pathData, paths = simWealth(simReturns, initialW, initialFlow, growthFlow, timeHorizon, bondStart, bondEnd, intlShare)
 
@@ -261,6 +261,6 @@ def output(simReturns, initialW, initialFlow, growthFlow, timeHorizon, bondStart
     plt.grid(True) # make vertical and horizontal grid
 
     # save to folder 'static' to present in output page below
-    plt.savefig('output.png', bbox_inches = 'tight')
-    plt.savefig('output.pdf', bbox_inches = 'tight', format = 'pdf')
+    plt.savefig(fileName + '.png', bbox_inches = 'tight')
+    plt.savefig(fileName + '.pdf', bbox_inches = 'tight', format = 'pdf')
     plt.close()
