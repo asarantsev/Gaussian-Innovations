@@ -48,11 +48,14 @@ print(RegIntl.summary())
 plots(RegIntl.resid, 'intl')
 
 RegI3 = OLS(nIntlRet, pd.DataFrame({'const' : 1/vol[42:], 'duration' : -np.diff(rates)[42:]/vol[42:], 'vol' : 1})).fit()
+print(RegI3.summary())
+plots(RegI3.resid, 'intl')
+
 RegR1 = OLS(np.diff(np.log(rates))/vol, pd.DataFrame({'const' : 1/vol, 'lag' : np.log(rates)[:-1]/vol})).fit()
 RegVol = OLS(np.log(vol)[1:], pd.DataFrame({'const' : 1, 'lag' : np.log(vol)[:-1]})).fit()
 RegL2 = OLS(np.log(bonds[1:]/bonds[:-1] - 0.01 * rates[45:-1])/vol[45:], pd.DataFrame({'duration' : -np.diff(rates)/vol}).iloc[45:]).fit()
 
-allResid = [RegUSA.resid, RegI3.resid, RegR1.resid, RegVol.resid, RegL2.resid, RegM.resid]
+allResid = [RegUSA.resid, RegI3.resid, RegL2.resid, RegVol.resid, RegR1.resid, RegM.resid]
 lengths = [len(res) for res in allResid]
 allNames = ['usa', 'intl', 'bonds', 'vol', 'rates', 'measure']
 allResiduals = pd.DataFrame(columns = allNames)
