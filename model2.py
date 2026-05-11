@@ -21,6 +21,13 @@ Sigma = 0.0001 * numpy.array([[2.026369, 0.847703, 0.208415, -3.626994, -0.15396
 # ln R(t) = c + k * ln R(t-1) + V(t) * Z_R(t)
 # M(t) = h + m * M(t-1) + V(t) * Z_M(t)
 
+# The average long-term volatility V is 10.51
+# The current (2025) volatility V is 11.77
+# The average long-term BAA rate R is 6.8
+# The current (December 2025) BAA rate is 5.9
+# The average long-term valuation measure is 0.24
+# The current (end-of-year 2025) valuation measure is 0.192
+
 def sim(initialV, initialR, initialM, T):
     
      # simulate 3d array corresponding to innovation terms
