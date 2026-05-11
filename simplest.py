@@ -2,29 +2,7 @@ import pandas as pd
 import numpy as np
 from statsmodels.api import OLS
 import matplotlib.pyplot as plt
-from scipy import stats
-from statsmodels.graphics.gofplots import qqplot
-from statsmodels.graphics.tsaplots import plot_acf
-from statsmodels.tsa.stattools import acf
-
-def plots(data, label):
-    plot_acf(data, zero = False)
-    plt.title(label + '\n ACF for Original Values')
-    plt.savefig('O-' + label + '.png')
-    plt.close()
-    plot_acf(abs(data), zero = False)
-    plt.title(label + '\n ACF for Absolute Values')
-    plt.savefig('A-' + label + '.png')
-    plt.close()
-    print(acf(data, qstat = True, nlags = 10)[2])
-    print(acf(abs(data), qstat = True, nlags = 10)[2])
-    qqplot(data, line = 's')
-    plt.title(label + '\n Quantile-Quantile Plot vs Normal')
-    plt.savefig('QQ-' + label + '.png')
-    plt.close()
-    print(label)
-    print(stats.jarque_bera(data))
-    return np.std(data)
+from verification import plots
     
 DF = pd.read_excel('data2025.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
@@ -74,20 +52,10 @@ print('Regression for the log volatility')
 print(RegVol.summary())
 resVol = RegVol.resid
 
-# nRates = np.diff(np.log(rates))/vol
-# print('Rates Model')
-# print('mean = ', np.mean(nRates))
-# resRates = center(nRates)
-
 regRates = OLS(np.diff(rates)/vol, pd.DataFrame({'const' : 1/vol, 'slope' : rates[:-1]/vol, 'vol' : 1})).fit()
 print('Regression for the log rates')
 print(regRates.summary())
 resRates = regRates.resid
-
-# regRates = OLS(np.diff(rates), pd.DataFrame({'const' : 1, 'slope' : rates[:-1]})).fit()
-# print('Regression for the rates')
-# print(regRates.summary())
-# resRates = regRates.resid
 
 print('International returns')
 print('mean = ', np.mean(nIntlRet))
@@ -98,9 +66,9 @@ RegBonds = OLS(normBonds, mainDF.iloc[45:]).fit()
 print(RegBonds.summary())
 resBonds = RegBonds.resid
 
-allResid = [resUSA, resIntl, resVol, resRates, resBonds]
+allResid = [resUSA, resIntl, resBonds, resVol, resRates]
 lengths = [len(res) for res in allResid]
-allNames = ['usa', 'intl', 'vol', 'rates', 'bonds']
+allNames = ['usa', 'intl', 'bonds', 'vol', 'rates']
 allResiduals = pd.DataFrame(columns = allNames)
 
 for k in range(5):
