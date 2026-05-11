@@ -6,12 +6,20 @@ Sigma = 0.0001 * numpy.array([[2.026369, 0.847703, 0.208415, -3.626994, -0.15396
 
 # The main simulation function with the complete 6-series model
 # outputs: USA stocks, international stocks, USA corporate bonds
-# factors: volatility, BAA bond rates, and the valuation measure
+# factors: volatility V, BAA bond rates R, and the valuation measure M
 # based on 1-year dividends instead of 10-year earnings
 # initialV, initialR, initialM are initial volatiltiy and rates
 # T is time horizon in years
 # returns three 2d arrays, each has rows which are time series simulations
 # domestic stocks, international stocks, and corporate bonds
+
+# Equations are: for W_k(t) = wealth at end of year t, k = 0, 1, 2 for USA corporate bonds, USA stocks, international stocks
+# ln W_1(t) - ln W_1(t-1) = a_1 - d_1 * (R(t) - R(t-1)) - b * M(t-1) + V(t) * c_1 + V(t) * Z_1(t) 
+# ln W_2(t) - ln W_2(t-1) = a_2 - d_2 * (R(t) - R(t-1)) + V(t) * c_2 + V(t) * Z_2(t) 
+# ln(W_0(t)/W_0(t-1) - 0.01R(t-1)) = -d_0(R(t) - R(t-1)) + V(t)Z_0(t)
+# ln V(t) = a + b * ln V(t-1) + Z_V(t)
+# ln R(t) = c + k * ln R(t-1) + V(t) * Z_R(t)
+# M(t) = h + m * M(t-1) + V(t) * Z_M(t)
 
 def sim(initialV, initialR, initialM, T):
     
@@ -19,12 +27,12 @@ def sim(initialV, initialR, initialM, T):
     noise = numpy.random.multivariate_normal(numpy.zeros(6), Sigma, (T, NSIMS))
     
     # split it into components corresponding to simulated series
-    noiseUSA = noise[:, :, 0] # USA stock returns
-    noiseIntl = noise[:, :, 1] # international stock returns
-    noiseBonds = noise[:, :, 2] # corporate bond returns
-    noiseVol = noise[:, :, 3] # volatility 
-    noiseRates = noise[:, :, 4] # corporate bond rates
-    noiseMeasure = noise[:, :, 5] # the new valuation measure
+    noiseUSA = noise[:, :, 0] # USA stock returns Z_1
+    noiseIntl = noise[:, :, 1] # international stock returns Z_2
+    noiseBonds = noise[:, :, 2] # corporate bond returns Z_0
+    noiseVol = noise[:, :, 3] # volatility Z_V
+    noiseRates = noise[:, :, 4] # corporate bond rates Z_R
+    noiseMeasure = noise[:, :, 5] # the new valuation measure Z_H
     
     # now initialize the 2d arrays corresponding to simulated series
     simRetUSA = numpy.zeros((T, NSIMS))
