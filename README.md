@@ -1,5 +1,5 @@
 The code and data for my-finance.org blogs https://my-finance.org/2026/05/09/improved-selection-of-model/ and https://my-finance.org/2026/05/09/improved-six-equation-model-selection/ 
-where we select the time series model with rates and volatility, with and without the new valuation measure, for domestic and international stock returns, and for domestic corporate bonds. 
+where we select the time series model with rates and volatility, with and without the new valuation measure https://my-finance.org/2026/01/30/new-valuation-measure-based-on-dividends/ for domestic and international stock returns, and for domestic corporate bonds. 
 
 check-basic-model.py is checking these five-series models in https://my-finance.org/2026/05/09/improved-selection-of-model/ and check-model.py is checking six-series model with the new valuation measure in https://my-finance.org/2026/05/09/improved-six-equation-model-selection/ and simplest.py is checking the simplest model where normalized stock returns are IID Gaussian and normalized differences of log bond rates are also IID Gaussian
 
