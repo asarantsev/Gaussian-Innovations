@@ -2,29 +2,8 @@ import pandas as pd
 import numpy as np
 from statsmodels.api import OLS
 import matplotlib.pyplot as plt
-from scipy import stats
-from statsmodels.graphics.gofplots import qqplot
-from statsmodels.graphics.tsaplots import plot_acf
-from statsmodels.tsa.stattools import acf
+from verification import plots 
 
-def plots(data, label):
-    plot_acf(data, zero = False)
-    plt.title(label + '\n ACF for Original Values')
-    plt.savefig('O-' + label + '.png')
-    plt.close()
-    plot_acf(abs(data), zero = False)
-    plt.title(label + '\n ACF for Absolute Values')
-    plt.savefig('A-' + label + '.png')
-    plt.close()
-    print(acf(data, qstat = True, nlags = 10)[2])
-    print(acf(abs(data), qstat = True, nlags = 10)[2])
-    qqplot(data, line = 's')
-    plt.title(label + '\n Quantile-Quantile Plot vs Normal')
-    plt.savefig('QQ-' + label + '.png')
-    plt.close()
-    print(label)
-    return np.std(data)
-    
 DF = pd.read_excel('data2025.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
 price = DF['Price'].values
@@ -77,7 +56,8 @@ plt.title('Measure')
 plt.savefig('measure.png')
 plt.close()
 
-mReg = OLS(np.diff(measure), pd.DataFrame({'const' : 1, 'lag' : measure[:-1]})).fit()
+mReg = OLS(np.diff(measure)/vol, pd.DataFrame({'const' : 1/vol, 'lag' : measure[:-1]/vol, 'vol' : 1})).fit()
+print('Regression for the valuation measure with volatility')
 print(mReg.params)
 
 nUSAret = total/vol
@@ -85,7 +65,7 @@ mainDF = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measu
 nIntlRet = np.log(np.ones(56) + intl)/vol[42:]
 normBonds = np.log(bonds[1:]/bonds[:-1] - 0.01 * rates[45:-1])/vol[45:]
 
-RegUSA = OLS(nUSAret, pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'vol' : 1})).fit()
+RegUSA = OLS(nUSAret, mainDF).fit()
 print('Regression for the USA returns')
 print(RegUSA.summary())
 resUSA = RegUSA.resid
@@ -110,13 +90,13 @@ print(RegIntl.summary())
 resIntl = RegIntl.resid
 
 print('bond returns')
-RegBonds = OLS(normBonds, pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'vol' : 1}).iloc[45:]).fit()
+RegBonds = OLS(normBonds, pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol}).iloc[45:]).fit()
 print(RegBonds.summary())
 resBonds = RegBonds.resid
 
-allResid = [resUSA, resIntl, resVol, resRates, resBonds, resMeas]
+allResid = [resUSA, resIntl, resBonds, resVol, resRates, resMeas]
 lengths = [len(res) for res in allResid]
-allNames = ['usa', 'intl', 'vol', 'rates', 'bonds', 'measure']
+allNames = ['usa', 'intl', 'bonds', 'vol', 'rates', 'measure']
 allResiduals = pd.DataFrame(columns = allNames)
 
 for k in range(6):
