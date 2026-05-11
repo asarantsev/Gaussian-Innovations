@@ -3,8 +3,6 @@ import numpy as np
 from statsmodels.api import OLS
 import matplotlib.pyplot as plt
 import scipy
-from statsmodels.graphics.gofplots import qqplot
-from statsmodels.graphics.tsaplots import plot_acf
 from statsmodels.api import stats
 
 def plots(data, label):
@@ -74,7 +72,3 @@ RegVolSpread = OLS(np.diff(spread)/vol, pd.DataFrame({'lag' : spread[:-1]/vol}))
 print(RegVolSpread.summary())
 resVolSpread = RegVolSpread.resid
 plots(resVolSpread, 'vol-spread')
-
-
-
-
