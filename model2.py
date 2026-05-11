@@ -4,7 +4,10 @@ NSIMS = 400
 
 Sigma = 0.0001 * numpy.array([[2.026369, 0.847703, 0.208415, -3.626994, -0.153965, 2.063568], [0.847703, 2.975298, -0.000237, -5.399599, 0.036818, 0.863375], [0.208415, -0.000237, 0.113497, 2.754026, -0.050806, 0.261286], [-3.626994, -5.399599, 2.754026, 1338.685234, 14.068448, -5.842714], [-0.153965, 0.036818, -0.050806, 14.068448, 1.935904, -0.844710], [2.063568, 0.863375, 0.261286, -5.842714, -0.844710, 3.152435]])
 
-# The main simulation function
+# The main simulation function with the complete 6-series model
+# outputs: USA stocks, international stocks, USA corporate bonds
+# factors: volatility, BAA bond rates, and the valuation measure
+# based on 1-year dividends instead of 10-year earnings
 # initialV, initialR, initialM are initial volatiltiy and rates
 # T is time horizon in years
 # returns three 2d arrays, each has rows which are time series simulations
