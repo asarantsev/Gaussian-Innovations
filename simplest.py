@@ -13,6 +13,11 @@ bonds = DF['Bonds'].values[45:]
 intl = DF['International'].values[43:]
 N = 98
 
+print('Average volatility = ', np.mean(vol))
+print('Average rate = ', np.mean(rates))
+print('2025 volatility = ', vol[-1])
+print('End of 2025 rate = ', rates[-1])
+
 plt.plot(range(1928, 1928 + N), vol)
 plt.title('Volatility')
 plt.savefig('vol.png')
