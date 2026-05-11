@@ -1,10 +1,7 @@
 import pandas as pd
 import numpy as np
 from statsmodels.api import OLS
-import matplotlib.pyplot as plt
 import scipy
-from statsmodels.graphics.gofplots import qqplot
-from statsmodels.graphics.tsaplots import plot_acf
 from statsmodels.api import stats 
 
 def plots(data, label):
@@ -21,6 +18,11 @@ rates = DF['Rates'].values
 bonds = DF['Bonds'].values[45:]
 intl = DF['International'].values[43:]
 N = 98
+
+print('Average volatility = ', np.mean(vol))
+print('Average rate = ', np.mean(rates))
+print('2025 volatility = ', vol[-1])
+print('End of 2025 rate = ', rates[-1])
 
 lvol = np.log(vol)
 total = np.array([np.log(price[k+1] + div[k+1]) - np.log(price[k]) for k in range(N)])
