@@ -22,6 +22,11 @@ bonds = DF['Bonds'].values[45:]
 intl = DF['International'].values[43:]
 N = 98
 
+print('Average volatility = ', np.mean(vol))
+print('Average rate = ', np.mean(rates))
+print('2025 volatility = ', vol[-1])
+print('End of 2025 rate = ', rates[-1])
+
 total = np.array([np.log(price[k+1] + div[k+1]) - np.log(price[k]) for k in range(N)])
 wealth = np.exp(np.append(np.array([0]), np.cumsum(total)))
 premeasure = np.log(wealth/div)
@@ -32,7 +37,12 @@ measure = premeasure + measureReg.params['trend']/measureReg.params['slope'] * r
 resMeas = measureReg.resid
 plots(resMeas, 'measure')
 RegM = OLS(measure[1:]/vol, pd.DataFrame({'const' : 1/vol, 'lag' : measure[:-1]/vol, 'vol' : 1})).fit()
+print('simple autoregression for the valuation measure')
 print(RegM.summary())
+
+print('average measure = ', np.mean(measure))
+print('end of 2025 measure = ', measure[-1])
+
 plots(RegM.resid, 'measure-vol')
 
 mainDF = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'vol' : 1})
