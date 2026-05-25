@@ -1,5 +1,5 @@
 The code and data for my-finance.org blogs https://my-finance.org/2026/05/09/improved-selection-of-model/ and https://my-finance.org/2026/05/09/improved-six-equation-model-selection/ 
-where we select the time series model with rates and volatility, with and without the new valuation measure https://my-finance.org/2026/01/30/new-valuation-measure-based-on-dividends/ for domestic and international stock returns, and for domestic corporate bonds. 
+where we select the time series model with rates and volatility, with and without the new valuation measure https://my-finance.org/2026/01/30/new-valuation-measure-based-on-dividends/ for domestic and international stock returns, and for domestic corporate bonds 
 
 check-basic-model.py is checking these five-series models in https://my-finance.org/2026/05/09/improved-selection-of-model/ and check-model.py is checking six-series model with the new valuation measure in https://my-finance.org/2026/05/09/improved-six-equation-model-selection/ and simplest.py is checking the simplest model where normalized stock returns are IID Gaussian and normalized differences of log bond rates are also IID Gaussian
 
@@ -29,4 +29,8 @@ data2025-new.xlsx is the same data as in data2025.xlsx but including spread (onl
 
 data2025-new.py is checking whether spreads follows an autoregression of order 1, with or without normalizing innovations by volatility, with all possible combinations of coefficients. Unfortunately, we conclude that our models with spreads do not pass these tests which we imposed in this blog post: https://my-finance.org/2026/05/09/improved-selection-of-model/
 
-This is why we do not write any model with spreads. There is nothing to write here. I feel very disappointed at omitting such an important financial indicator. Maybe future research will show some improvement. 
+This is why we do not write any model with spreads. There is nothing to write here. I feel very disappointed at omitting such an important financial indicator. Maybe future research will show some improvement
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Update: 2d.py is the code fitting the updated (BAA, Long) data with December average. Only the spread volatility has autoregression with volatility normalization (we need the latter) to make innovations Gaussian IID. And the data file is data.xlsx
