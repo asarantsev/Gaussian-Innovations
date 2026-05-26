@@ -33,4 +33,4 @@ This is why we do not write any model with spreads. There is nothing to write he
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Update: 2d.py is the code fitting the updated (BAA, Long) data with December average. Only the spread volatility has autoregression with volatility normalization (we need the latter) to make innovations Gaussian IID. And the data file is data.xlsx
+Update: Consider fitting the updated BAA, Long rates, with December average. Data file is data.xlsx and we have three code files: 2d.py fits the updated (BAA, Long) data. We failed to make innovations Gaussian IID. log-rates.py is the code fitting the updated log(BAA), log(Long) models. We were able to fit only log(BAA-Long) as a simple autoregression, without volatility. risk-spread.py is the code fitting total normalized returns of S&P 500 vs spreads, and we can fit only the model vs spreads/vol, with or without logarithm. 
