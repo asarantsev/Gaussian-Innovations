@@ -44,32 +44,49 @@ plots(RegMeasure.resid, 'measure-vol')
 
 mainDF = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'vol' : 1})
 RegUSA = OLS(total/vol, mainDF).fit()
-print('Regression for domestic returns')
+print('Regression for normalized geometric returns of the S&P')
 print(RegUSA.summary())
 plots(RegUSA.resid, 'usa')
 
 nIntlRet = np.log(np.ones(56) + intl)/vol[42:]
 RegIntl = OLS(nIntlRet, mainDF.iloc[42:]).fit()
-print('Regression for international returns')
+print('Regression for normalized geometric returns of developed markets')
 print(RegIntl.summary())
 plots(RegIntl.resid, 'intl')
 
+print('Cut regression for normalized geometric returns of developed markets')
+print('with duration but without the valuation measure')
 RegIcut = OLS(nIntlRet, pd.DataFrame({'const' : 1/vol[42:], 'duration' : -np.diff(rates)[42:]/vol[42:], 'vol' : 1})).fit()
 print(RegIcut.summary())
 plots(RegIcut.resid, 'intl')
 
+print('Cut regression for normalized geometric returns of emerging markets')
+print('with duration but without the valuation measure')
 nEMRet = np.log(np.ones(38) + em)/vol[60:]
 RegEM = OLS(nEMRet, pd.DataFrame({'const' : 1/vol[60:], 'duration' : -np.diff(rates)[60:]/vol[60:], 'vol' : 1})).fit()
 print(RegEM.summary())
 plots(RegEM.resid, 'em')
 
+print('Autoregression of corporate bond rates with stochastic volatility')
 RegBondRates = OLS(np.diff(np.log(rates))/vol, pd.DataFrame({'const' : 1/vol, 'lag' : np.log(rates)[:-1]/vol})).fit()
-RegVol = OLS(np.log(vol)[1:], pd.DataFrame({'const' : 1, 'lag' : np.log(vol)[:-1]})).fit()
-RegBondReturns = OLS(np.log(bonds[1:]/bonds[:-1] - 0.01 * rates[45:-1])/vol[45:], pd.DataFrame({'duration' : -np.diff(rates)/vol}).iloc[45:]).fit()
+print(RegBondRates.summary())
+plots(RegBondRates.resid, 'bondRates')
 
+print('Autoregression of log volatility')
+RegVol = OLS(np.log(vol)[1:], pd.DataFrame({'const' : 1, 'lag' : np.log(vol)[:-1]})).fit()
+print(RegVol.summary())
+plots(RegVol.resid, 'vol')
+
+print('Arithmetic corporate bond returns regression with stochastic volatility')
+RegBondReturns = OLS(np.log(bonds[1:]/bonds[:-1] - 0.01 * rates[45:-1])/vol[45:], pd.DataFrame({'duration' : -np.diff(rates)/vol}).iloc[45:]).fit()
+print(RegBondReturns.summary())
+plots(RegBondReturns.resid, 'bondReturns')
+
+print('Log risk spread of log rates')
 spreads = np.log(rates) - np.log(long)
 lspreads = np.log(spreads)
-RegRiskSpreads = OLS(lspreads[1:], pd.DataFrame({'const' : 1, 'lag' : lspreads[:-1]})).fit()
+print('Autoregression of order 1')
+RegRiskSpreads = OLS(np.diff(lspreads), pd.DataFrame({'const' : 1, 'lag' : lspreads[:-1]})).fit()
 print(RegRiskSpreads.summary())
 plots(RegRiskSpreads.resid, 'spreads')
 
