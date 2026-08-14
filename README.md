@@ -33,3 +33,5 @@ The file model8.py is similar to model5.py and model6.py where we have printed a
 Finally, app-full-model.py is the simulation of these portfolio returns with these 5 asset classes, given that we already simulated these asset classes. This is an upgraded version of my_finance.py. 
 
 All this is explained in an updated blog post https://my-finance.org/2026/08/14/including-bond-factors-into-the-new-gaussian-model/ see also another updated post https://my-finance.org/2026/08/14/market-models-with-gaussian-innovations/
+
+We only need to write the simulation file, similar to model0.py, model1.py, and model2.py TBD
