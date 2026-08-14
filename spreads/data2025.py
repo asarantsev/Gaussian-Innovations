@@ -11,7 +11,7 @@ def plots(data, label):
     print('Same for absolute values = ', stats.acorr_ljungbox(abs(data), lags = [5, 10])['lb_pvalue'].values)
     print('Jarque-Bera p = ', scipy.stats.jarque_bera(data)[1])
     
-DF = pd.read_excel('data2025-new.xlsx', sheet_name = 'data')
+DF = pd.read_excel('data2025.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
 price = DF['Price'].values
 div = DF['Dividends'].values
