@@ -39,33 +39,40 @@ print(RegMeasure.summary())
 
 print('average measure = ', np.mean(measure))
 print('end of 2025 measure = ', measure[-1])
-
 plots(RegMeasure.resid, 'measure-vol')
 
-mainDF = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'vol' : 1})
+mainDF = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'spread' : (rates - long)[:-1]/vol, 'vol' : 1})
 RegUSA = OLS(total/vol, mainDF).fit()
 print('Regression for normalized geometric returns of the S&P')
+print('with duration, spreads, and the valuation measure')
 print(RegUSA.summary())
 plots(RegUSA.resid, 'usa')
 
 nIntlRet = np.log(np.ones(56) + intl)/vol[42:]
 RegIntl = OLS(nIntlRet, mainDF.iloc[42:]).fit()
 print('Regression for normalized geometric returns of developed markets')
+print('with duration, spreads, and the valuation measure')
 print(RegIntl.summary())
-plots(RegIntl.resid, 'intl')
+plots(RegIntl.resid, 'intl-full')
 
 print('Cut regression for normalized geometric returns of developed markets')
-print('with duration but without the valuation measure')
-RegIcut = OLS(nIntlRet, pd.DataFrame({'const' : 1/vol[42:], 'duration' : -np.diff(rates)[42:]/vol[42:], 'vol' : 1})).fit()
-print(RegIcut.summary())
-plots(RegIcut.resid, 'intl')
+print('with duration but without spreads and the valuation measure')
+RegIntlcut = OLS(nIntlRet, pd.DataFrame({'const' : 1/vol[42:], 'duration' : -np.diff(rates)[42:]/vol[42:], 'vol' : 1})).fit()
+print(RegIntlcut.summary())
+plots(RegIntlcut.resid, 'intl-cut')
+
+nEMRet = np.log(np.ones(38) + em)/vol[60:]
+RegEM = OLS(nEMRet, mainDF.iloc[60:]).fit()
+print('Regression for normalized geometric returns of emerging markets')
+print('with duration, spreads, and the valuation measure')
+print(RegEM.summary())
+plots(RegEM.resid, 'em-full')
 
 print('Cut regression for normalized geometric returns of emerging markets')
 print('with duration but without the valuation measure')
-nEMRet = np.log(np.ones(38) + em)/vol[60:]
-RegEM = OLS(nEMRet, pd.DataFrame({'const' : 1/vol[60:], 'duration' : -np.diff(rates)[60:]/vol[60:], 'vol' : 1})).fit()
-print(RegEM.summary())
-plots(RegEM.resid, 'em')
+RegEMcut = OLS(nEMRet, pd.DataFrame({'const' : 1/vol[60:], 'duration' : -np.diff(rates)[60:]/vol[60:], 'vol' : 1})).fit()
+print(RegEMcut.summary())
+plots(RegEMcut.resid, 'em-cut')
 
 print('Autoregression of corporate bond rates with stochastic volatility')
 RegBondRates = OLS(np.diff(np.log(rates))/vol, pd.DataFrame({'const' : 1/vol, 'lag' : np.log(rates)[:-1]/vol})).fit()
@@ -90,9 +97,9 @@ RegRiskSpreads = OLS(np.diff(lspreads), pd.DataFrame({'const' : 1, 'lag' : lspre
 print(RegRiskSpreads.summary())
 plots(RegRiskSpreads.resid, 'spreads')
 
-allResid = [RegUSA.resid, RegIcut.resid, RegEM.resid, RegBondReturns.resid, RegVol.resid, RegBondRates.resid, RegMeasure.resid, RegRiskSpreads.resid]
+allResid = [RegUSA.resid, RegIntl.resid, RegEM.resid, RegBondReturns.resid, RegVol.resid, RegBondRates.resid, RegMeasure.resid, RegRiskSpreads.resid]
 lengths = [len(res) for res in allResid]
-allNames = ['usa', 'intl', 'em', 'bondReturns', 'vol', 'bondRates', 'measure', 'spreads']
+allNames = ['usa', 'intl-full', 'em-full', 'bondReturns', 'vol', 'bondRates', 'measure', 'spreads']
 allResiduals = pd.DataFrame(columns = allNames)
 
 for k in range(8):
