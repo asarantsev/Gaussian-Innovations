@@ -10,6 +10,9 @@ vol = DF['Volatility'].values[1:]
 price = DF['Price'].values
 div = DF['Dividends'].values
 N = 98
+# Risk spreads, but edit to
+# spreads = np.log(baa) - np.log(long) 
+# to check another case
 spreads = baa - long
 lspreads = np.log(spreads)
 total = np.array([np.log(price[k+1] + div[k+1]) - np.log(price[k]) for k in range(N)])
