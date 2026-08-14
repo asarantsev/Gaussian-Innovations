@@ -1,3 +1,13 @@
+# This is the file where we have 5 asset classes:
+# 3 geometric stock returns: S&P, developed, emerging
+# 2 arithmetic bond returns: Corporate investment-grade and Treasury
+# There are 4 factors: stock valuation measure and volatility
+# BAA and Treasury bond rates
+# All data is annual and nominal, not inflation-adjusted
+# We verify various linear regressions
+# to test whether their residuals are IID Gaussian
+# and their goodness of fit, judging by R^2 and Student p-values
+
 import pandas as pd
 import numpy as np
 from statsmodels.api import OLS
@@ -54,8 +64,8 @@ plots(RegMeasure.resid, 'measure-vol')
 
 # Fitting various regressions for the USA normalized geometric stock returns
 # This version is without spreads
-mainDF = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'vol' : 1})
-RegUSA = OLS(total/vol, mainDF).fit()
+DFcut = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'vol' : 1})
+RegUSA = OLS(total/vol, DFcut).fit()
 print('Regression for normalized geometric returns of the S&P')
 print('with duration, spreads, and the valuation measure')
 print(RegUSA.summary())
@@ -63,8 +73,8 @@ plots(RegUSA.resid, 'usa')
 
 # And now four various versions with risk spreads. 
 # Here is the spread: BAA - long, the version which we finally choose
-DF0 = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'spread' : (rates - long)[:-1]/vol, 'vol' : 1})
-RegUSA = OLS(total/vol, DF0).fit()
+mainDF = pd.DataFrame({'const' : 1/vol, 'duration' : -np.diff(rates)/vol, 'measure' : -measure[:-1]/vol, 'spread' : (rates - long)[:-1]/vol, 'vol' : 1})
+RegUSA = OLS(total/vol, mainDF).fit()
 print('Regression for normalized geometric returns of the S&P')
 print('versus duration, valuation, spread')
 print(RegUSA.summary())
@@ -153,18 +163,3 @@ print('Autoregression of order 1')
 RegRiskSpreads = OLS(np.diff(lspreads), pd.DataFrame({'const' : 1, 'lag' : lspreads[:-1]})).fit()
 print(RegRiskSpreads.summary())
 plots(RegRiskSpreads.resid, 'spreads')
-
-# print the covariace and correlation matrix for residuals, 
-# there are eight series 
-allResid = [RegUSA.resid, RegIntl.resid, RegEM.resid, RegBondReturns.resid, RegVol.resid, RegBondRates.resid, RegMeasure.resid, RegRiskSpreads.resid]
-lengths = [len(res) for res in allResid]
-allNames = ['usa', 'intl-full', 'em-full', 'bondReturns', 'vol', 'bondRates', 'measure', 'spreads']
-allResiduals = pd.DataFrame(columns = allNames)
-
-for k in range(8):
-    allResiduals[allNames[k]] = np.pad(allResid[k], (N - lengths[k], 0), constant_values = np.nan)
-    
-covMatrix = allResiduals.cov()
-corrMatrix = allResiduals.corr()
-print(covMatrix*10000)
-print(corrMatrix)
