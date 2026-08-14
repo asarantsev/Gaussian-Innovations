@@ -3,7 +3,7 @@ where we select the time series model with rates and volatility, with and withou
 
 check-basic-model.py is checking these five-series models in https://my-finance.org/2026/05/09/improved-selection-of-model/ and check-model.py is checking six-series model with the new valuation measure in https://my-finance.org/2026/05/09/improved-six-equation-model-selection/ and simplest.py is checking the simplest model where normalized stock returns are IID Gaussian and normalized differences of log bond rates are also IID Gaussian
 
-model0.py is simulating this simplest model. model1.py is simulating the more complicated 5-series model. model2.py is simulating the 6-series model. data2025.xlsx is the data file 1927--2025
+model0.py is simulating this simplest model. model1.py is simulating the more complicated 5-series model. model2.py is simulating the 6-series model. data.xlsx is the data file 1927--2025 including long-term Treasury rates (which are not used in these models).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
