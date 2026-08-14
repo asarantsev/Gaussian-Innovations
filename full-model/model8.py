@@ -4,6 +4,13 @@ from statsmodels.api import OLS
 import matplotlib.pyplot as plt
 import scipy
 
+# This is the file where we have 5 asset classes:
+# 3 geometric stock returns: S&P, developed, emerging
+# 2 arithmetic bond returns: Corporate investment-grade and Treasury
+# There are 4 factors: stock valuation measure and volatility
+# BAA and Treasury bond rates
+# All data is annual and nominal, not inflation-adjusted
+
 # reading the data file
 DF = pd.read_excel('full-data.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
@@ -24,23 +31,27 @@ print('2025 volatility = ', vol[-1])
 print('End of 2025 BAA rate = ', rates[-1])
 print('End of 2025 long rate = ', long[-1])
 
+# plot of volatility
 plt.plot(range(1928, 1928 + N), vol)
 plt.title('Volatility')
 plt.savefig('vol.png')
 plt.close()
 
+# log plot of S&P level
 plt.plot(range(1927, 1928 + N), price)
 plt.title('Index')
 plt.yscale('log')
 plt.savefig('index.png')
 plt.close()
 
+# graph of the two bond rates
 plt.plot(range(1927, 1928 + N), rates, label = 'BAA')
 plt.plot(range(1927, 1928 + N), long, label = '10-year Treasury')
 plt.title('Bond Rates')
 plt.savefig('rates.png')
 plt.close()
 
+# log scale plot of annual dividends
 plt.plot(range(1927, 1928 + N), div)
 plt.title('Dividends')
 plt.yscale('log')
@@ -59,14 +70,15 @@ print(measureReg.summary())
 measure = premeasure + measureReg.params['trend']/measureReg.params['slope'] * range(N + 1)
 
 # Fitting autoregression for the valuation measure with stochastic volatility
-RegMeasure = OLS(measure[1:]/vol, pd.DataFrame({'const' : 1/vol, 'lag' : measure[:-1]/vol, 'vol' : 1})).fit()
-print('simple autoregression for the valuation measure')
+RegMeasure = OLS(np.diff(measure)/vol, pd.DataFrame({'const' : 1/vol, 'lag' : measure[:-1]/vol, 'vol' : 1})).fit()
+print('simple autoregression for the valuation measure with stochastic volatility')
 print(RegMeasure.summary())
 
 # current and long-term average 
 print('average measure = ', np.mean(measure))
 print('end of 2025 measure = ', measure[-1])
 
+# graph of the new valuation measure
 plt.plot(range(1927, 1928 + N), measure)
 plt.title('Measure')
 plt.savefig('measure.png')
@@ -101,7 +113,7 @@ print(RegBondRates.summary())
 
 # Autoregression of annual volatility on log scale
 print('Autoregression of log volatility')
-RegVol = OLS(np.log(vol)[1:], pd.DataFrame({'const' : 1, 'lag' : np.log(vol)[:-1]})).fit()
+RegVol = OLS(np.diff(np.log(vol)), pd.DataFrame({'const' : 1, 'lag' : np.log(vol)[:-1]})).fit()
 print(RegVol.summary())
 
 # Corporate bond returns vs rates regression
@@ -118,16 +130,21 @@ RegRiskSpreads = OLS(np.diff(lspreads), pd.DataFrame({'const' : 1, 'lag' : lspre
 print(RegRiskSpreads.summary())
 
 # print the covariace and correlation matrix for residuals, 
-# there are eight series 
+# there are eight series since 4 + 5 = 9 equations
+# but the equation for Treasury bond returns is deterministic
 allResid = [RegUSA.resid, RegIntl.resid, RegEM.resid, RegBondReturns.resid, RegVol.resid, RegBondRates.resid, RegMeasure.resid, RegRiskSpreads.resid]
 lengths = [len(res) for res in allResid]
 allNames = ['usa', 'intl-full', 'em-full', 'bondReturns', 'vol', 'bondRates', 'measure', 'spreads']
 allResiduals = pd.DataFrame(columns = allNames)
+
 for k in range(8):
     allResiduals[allNames[k]] = np.pad(allResid[k], (N - lengths[k], 0), constant_values = np.nan)
     
 covMatrix = allResiduals.cov()
 corrMatrix = allResiduals.corr()
+
+# we print it column by column since the screen does not fit
+# the entire 8x8 matrices
 for name in allNames:
     print(covMatrix[name]*10000)
     print(corrMatrix[name])
