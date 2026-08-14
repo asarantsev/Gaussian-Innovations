@@ -26,3 +26,5 @@ Update: Consider a five-asset model with US stocks, international developed stoc
 Also, here we add spread to factors of normalized US stock geometric returns: We check which version of spread has the best predictive value: spread of rates, spread of log rates, log spread of rates, log spread of log rates. We pick the model with spread of rates. Also, we add spread and valuation to developed and emerging markets. We compare with cut regression, where we have only the duration factor, and valuation with risk spread are removed. But we choose the full regression. 
 
 Finally, app-full-model.py is the simulation of these portfolio returns with these 5 asset classes, given that we already simulated these asset classes. This is an upgraded version of my_finance.py. 
+
+All this is explained in an updated blog post https://my-finance.org/2026/08/14/including-bond-factors-into-the-new-gaussian-model/ see also another updated post https://my-finance.org/2026/08/14/market-models-with-gaussian-innovations/
