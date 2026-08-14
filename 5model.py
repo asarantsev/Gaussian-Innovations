@@ -4,7 +4,7 @@ from statsmodels.api import OLS
 import matplotlib.pyplot as plt
 from verification import plots
 
-DF = pd.read_excel('data2025.xlsx', sheet_name = 'data')
+DF = pd.read_excel('data.xlsx', sheet_name = 'data')
 vol = DF['Volatility'].values[1:]
 price = DF['Price'].values
 div = DF['Dividends'].values
