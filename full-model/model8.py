@@ -1,15 +1,16 @@
-import pandas as pd
-import numpy as np
-from statsmodels.api import OLS
-import matplotlib.pyplot as plt
-import scipy
-
 # This is the file where we have 5 asset classes:
 # 3 geometric stock returns: S&P, developed, emerging
 # 2 arithmetic bond returns: Corporate investment-grade and Treasury
 # There are 4 factors: stock valuation measure and volatility
 # BAA and Treasury bond rates
 # All data is annual and nominal, not inflation-adjusted
+# We select chosen regressions and print them, also graphs
+
+import pandas as pd
+import numpy as np
+from statsmodels.api import OLS
+import matplotlib.pyplot as plt
+import scipy
 
 # reading the data file
 DF = pd.read_excel('full-data.xlsx', sheet_name = 'data')
