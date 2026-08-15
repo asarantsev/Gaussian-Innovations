@@ -1,18 +1,12 @@
-The code and data for my-finance.org blogs 
-
-https://my-finance.org/2026/05/09/improved-selection-of-model/ 
-
-https://my-finance.org/2026/05/09/improved-six-equation-model-selection/ 
-
-where we select the time series model with rates and volatility, with and without the new valuation measure 
-
-https://my-finance.org/2026/01/30/new-valuation-measure-based-on-dividends/ 
-
-for domestic and international stock returns, and for domestic corporate bonds; Most importantly, the foundational blog post 
+The code and data for my-finance.org foundational blog posts 
 
 https://my-finance.org/2026/08/14/including-bond-factors-into-the-new-gaussian-model/ 
 
-which discusses the 5 asset classes with 4 market factors model.
+which discusses the 5 asset classes with 4 market factors model. We do this in full-model folder of this repository. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Also, this GitHub repository discusses https://my-finance.org/2026/05/09/improved-selection-of-model/ and https://my-finance.org/2026/05/09/improved-six-equation-model-selection/ where we select the time series model with rates and volatility, with and without the new valuation measure https://my-finance.org/2026/01/30/new-valuation-measure-based-on-dividends/ for domestic and international stock returns, and for domestic corporate bonds.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -39,7 +33,9 @@ Update: Consider fitting the updated BAA, Long rates, with December average. Dat
 Update: Consider a 5-asset model with US stocks, international developed stocks, emerging markets stocks, 10-year Treasury bonds, and investment-grade corporate bonds. This is an improvement over our previous 3-asset model with US stocks, international developed stocks, and corporate bonds. Our new model has 4 factors: S&P volatility, the new valuation measure, BAA rate, and long-term Treasury rate 
 (measured in this model using risk spread). Previously, we had only the former 3 factors (except the latter one).
 
-I created a subfolder full-model for this. I united all data in completed file full-data.xlsx which includes long-term Treasury rates and emerging market returns. Also, I edited this data file by greatly improving the readme sheet of this spreadsheet. This helps us to fit this full model. Also, check-full-model.py is verifying that the regressions in the above description work, in the sense that residuals are IID Gaussian. This is simply existing work from check-model.py and log-rates.py (the successful working part) plus emerging markets returns divided by volatility versus change in rates, so duration (the same as for developed markets). But we decided to put it in one Python file. 
+I created a subfolder full-model 
+
+I united all data in completed file full-data.xlsx which includes long-term Treasury rates and emerging market returns. Also, I edited this data file by greatly improving the readme sheet of this spreadsheet. This helps us to fit this full model. Also, check-full-model.py is verifying that the regressions in the above description work, in the sense that residuals are IID Gaussian. This is simply existing work from check-model.py and log-rates.py (the successful working part) plus emerging markets returns divided by volatility versus change in rates, so duration (the same as for developed markets). But we decided to put it in one Python file. 
 
 Also, here we add spread to factors of normalized US stock geometric returns: We check which version of spread has the best predictive value: spread of rates, spread of log rates, log spread of rates, log spread of log rates. We pick the model with spread of rates. Also, we add spread and valuation to developed and emerging markets. We compare with cut regression, where we have only the duration factor, and valuation with risk spread are removed. But we choose the full regression. 
 
