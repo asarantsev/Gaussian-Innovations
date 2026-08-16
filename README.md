@@ -35,15 +35,14 @@ Update: Consider a 5-asset model with US stocks, international developed stocks,
 
 I created a subfolder full-model 
 
-I united all data in completed file full-data.xlsx which includes long-term Treasury rates and emerging market returns. Also, I edited this data file by greatly improving the readme sheet of this spreadsheet. This helps us to fit this full model. Also, check-full-model.py is verifying that the regressions in the above description work, in the sense that residuals are IID Gaussian. This is simply existing work from check-model.py and log-rates.py (the successful working part) plus emerging markets returns divided by volatility versus change in rates, so duration (the same as for developed markets). But we decided to put it in one Python file. 
+I united all data in completed file full-data.xlsx which includes long-term Treasury rates and emerging market returns. Also, I edited this data file by greatly improving the readme sheet of this spreadsheet. This helps us to fit this full model. Also, checkFullModel.py is verifying that the regressions in the above description work, in the sense that residuals are IID Gaussian. This is simply existing work from check-model.py and log-rates.py (the successful working part) plus emerging markets returns divided by volatility versus change in rates, so duration (the same as for developed markets). But we decided to put it in one Python file. 
 
 Also, here we add spread to factors of normalized US stock geometric returns: We check which version of spread has the best predictive value: spread of rates, spread of log rates, log spread of rates, log spread of log rates. We pick the model with spread of rates. Also, we add spread and valuation to developed and emerging markets. We compare with cut regression, where we have only the duration factor, and valuation with risk spread are removed. But we choose the full regression. 
 
 The file model8.py is similar to model5.py and model6.py where we have printed all regression results, and covariance and correlation matrix for all 8 residuals (4 market factors + 4 asset classes, except the long-term Treasury returns). For long-term Treasuries, their returns are deterministic functions of Treasury rates.
 
-Finally, app-full-model.py is the simulation of these portfolio returns with these 5 asset classes, given that we already simulated these asset classes. This is an upgraded version of my_finance.py. 
+Finally, appFullModel.py is the simulation of these portfolio returns with these 5 asset classes, given that we already simulated these asset classes. This is an upgraded version of my_finance.py. 
 
 All this is explained in an updated blog post https://my-finance.org/2026/08/14/including-bond-factors-into-the-new-gaussian-model/ see also another updated post https://my-finance.org/2026/08/14/market-models-with-gaussian-innovations/
 
-We have the simulation file sim-full-model.py similar to model0.py, model1.py, and model2.py 
-This would be useful for building a financial app, together with the app-full-model.py
+We have the simulation file simFullModel.py similar to model0.py, model1.py, and model2.py which would be useful for building a financial app, together with the app-full-model.py
