@@ -133,4 +133,4 @@ def sim(initialV, initialR, initialM, initialL, T):
         simRetBonds[t] = 0.01 * simRates[t] + numpy.exp(- 0.0596 * (simRates[t+1] - simRates[t]) + simVol[t + 1] * noiseBonds[t]) - numpy.ones(NSIMS)
         simRetLong[t] = ((numpy.ones(NSIMS) + 0.01 * simLong[t])**10)*((numpy.ones(NSIMS) + 0.01 * simLong[t+1])**(-9)) - numpy.ones(NSIMS)
     
-    return [simRetUSA, simRetIntl, simRetEm, simRetBonds, simRetLong]
+    return [simRetUSA, simRetIntl, simRetEm, simRetLong, simRetBonds]
