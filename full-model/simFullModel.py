@@ -103,7 +103,7 @@ def sim(initialV, initialH, initialR, initialL, T):
     
     # simulate log rates as heteroscedastic random walk
     for t in range(T):
-        simLRates[t + 1] = 0.0708 + (1 - 0.0411) * simLRates[t] + noiseRates[t] * simVol[t + 1] 
+        simLRates[t + 1] = 0.0708 + (1 - 0.0441) * simLRates[t] + noiseRates[t] * simVol[t + 1] 
         
     # take exponents to get rates
     simRates = numpy.exp(simLRates)
