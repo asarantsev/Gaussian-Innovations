@@ -46,3 +46,7 @@ Finally, appFullModel.py is the simulation of these portfolio returns with these
 All this is explained in an updated blog post https://my-finance.org/2026/08/14/including-bond-factors-into-the-new-gaussian-model/ see also another updated post https://my-finance.org/2026/08/14/market-models-with-gaussian-innovations/
 
 We have the simulation file simFullModel.py similar to model0.py, model1.py, and model2.py which would be useful for building a financial app, together with the app-full-model.py
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+UPDATE: In this subfolder full-model, we get the Box-Cox transform testing for original and normalized series of log returns of the three stock asset classes. This corresponds to 
