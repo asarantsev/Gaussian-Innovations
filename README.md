@@ -52,3 +52,7 @@ Update: In this subfolder full-model, we get the Box-Cox transform testing for o
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Update: In another subfolder treasury-bonds, we model total annual returns of 10-year zero-coupon Treasury bonds given rates of 10-year and 9-year zero-coupon Treasury rates, end-of-year. But these rates are close to 10-year coupon Treasury bonds, December average. Thus we can compute these from these 10-year coupon bonds. There is a small error, although the correlation between two series of returns is more than 97%. However, we still need to include these random terms, and therefore we have 9 equations and 9 innovation series. Not, as previously noted, 9 equations (5 for asset class returns + 4 for financial market factors) but only 8 innovation series. https://my-finance.org/2026/09/01/treasury-10-year-bond-annual-returns/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Update: We added 7years.py to this subfolder treasury-bonds to fit (successfully) the total returns of zero-coupon 7-year Treasury bonds, 1962-2025. We do not need the Box-Cox transform. The usual simple linear regression will suffice. See Section 4 in https://my-finance.org/2026/09/01/treasury-10-year-bond-annual-returns/
