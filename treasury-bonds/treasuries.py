@@ -12,11 +12,18 @@ def verification(data):
     print('ACF p-value for Ljung-Box test = ', stats.acorr_ljungbox(data, lags = [5, 10])['lb_pvalue'].values)
     print('Same for absolute values = ', stats.acorr_ljungbox(abs(data), lags = [5, 10])['lb_pvalue'].values)
 
-
 DF = pandas.read_excel('annual-zeros-1961.xlsx', sheet_name = 'summary')
 benchmark = DF['Benchmark'].values
 target = DF['Target'].values
-vol = DF['Volatility'].values
+plt.plot(benchmark, target, 'o')
+plt.xlabel('Benchmark')
+plt.ylabel('Target')
+plt.show()
+Years = range(1972, 2026)
+plt.plot(Years, benchmark, label = 'Benchmark')
+plt.plot(Years, target, label = 'Target')
+plt.legend()
+plt.show()
 Reg = scipy.stats.linregress(benchmark, target)
 resid = target - Reg.slope * benchmark - Reg.intercept * numpy.ones(54)
 verification(resid) 
@@ -26,16 +33,7 @@ plot_acf(abs(resid))
 plt.show()
 qqplot(resid, line = 's')
 plt.show()
-
-nresid = resid/vol
-verification(nresid)
-plot_acf(nresid)
-plt.show()
-plot_acf(abs(nresid))
-plt.show()
-qqplot(nresid, line = 's')
-plt.show()
-
+# Apply the Box-Cox transform to exponentiated residuals
 nresid = scipy.stats.boxcox(numpy.exp(resid))[0]
 verification(nresid)
 plot_acf(nresid)
