@@ -15,6 +15,7 @@ def verification(data):
 DF = pandas.read_excel('annual-zeros-1961.xlsx', sheet_name = 'summary')
 benchmark = DF['Benchmark'].values
 target = DF['Target'].values
+
 plt.plot(benchmark, target, 'o')
 plt.xlabel('Benchmark')
 plt.ylabel('Target')
@@ -24,8 +25,11 @@ plt.plot(Years, benchmark, label = 'Benchmark')
 plt.plot(Years, target, label = 'Target')
 plt.legend()
 plt.show()
+
+# Fit Regression
 Reg = scipy.stats.linregress(benchmark, target)
 resid = target - Reg.slope * benchmark - Reg.intercept * numpy.ones(54)
+print(Reg)
 verification(resid) 
 plot_acf(resid)
 plt.show()
@@ -33,8 +37,10 @@ plot_acf(abs(resid))
 plt.show()
 qqplot(resid, line = 's')
 plt.show()
+
 # Apply the Box-Cox transform to exponentiated residuals
 nresid = scipy.stats.boxcox(numpy.exp(resid))[0]
+print('lambda = ', scipy.stats.boxcox(numpy.exp(resid))[1])
 verification(nresid)
 plot_acf(nresid)
 plt.show()
