@@ -31,9 +31,7 @@ Update: Consider fitting the updated BAA, Long rates, with December average. Dat
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 
 Update: Consider a 5-asset model with US stocks, international developed stocks, emerging markets stocks, 10-year Treasury bonds, and investment-grade corporate bonds. This is an improvement over our previous 3-asset model with US stocks, international developed stocks, and corporate bonds. Our new model has 4 factors: S&P volatility, the new valuation measure, BAA rate, and long-term Treasury rate 
-(measured in this model using risk spread). Previously, we had only the former 3 factors (except the latter one).
-
-I created a subfolder full-model 
+(measured in this model using risk spread). Previously, we had only the former 3 factors (except the latter one). I created a subfolder full-model 
 
 I united all data in completed file full-data.xlsx which includes long-term Treasury rates and emerging market returns. Also, I edited this data file by greatly improving the readme sheet of this spreadsheet. This helps us to fit this full model. Also, checkFullModel.py is verifying that the regressions in the above description work, in the sense that residuals are IID Gaussian. This is simply existing work from check-model.py and log-rates.py (the successful working part) plus emerging markets returns divided by volatility versus change in rates, so duration (the same as for developed markets). But we decided to put it in one Python file. 
 
@@ -49,4 +47,8 @@ We have the simulation file simFullModel.py similar to model0.py, model1.py, and
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-UPDATE: In this subfolder full-model, we get the Box-Cox transform testing for original and normalized series of log returns of the three stock asset classes. This corresponds to 
+Update: In this subfolder full-model, we get the Box-Cox transform testing for original and normalized series of log returns of the three stock asset classes. This corresponds to the blog post https://my-finance.org/2026/08/31/the-box-cox-transform-and-its-use-for-financial-data/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Update: In another subfolder treasury-bonds, we model total annual returns of 10-year zero-coupon Treasury bonds given rates of 10-year and 9-year zero-coupon Treasury rates, end-of-year. But these rates are close to 10-year coupon Treasury bonds, December average. Thus we can compute these from these 10-year coupon bonds. There is a small error, although the correlation between two series of returns is more than 97%. However, we still need to include these random terms, and therefore we have 9 equations and 9 innovation series. Not, as previously noted, 9 equations (5 for asset class returns + 4 for financial market factors) but only 8 innovation series. 
