@@ -13,7 +13,7 @@ def verification(data):
     print('Same for absolute values = ', stats.acorr_ljungbox(abs(data), lags = [5, 10])['lb_pvalue'].values)
 
 
-DF = pandas.read_excel('treasuries.xlsx')
+DF = pandas.read_excel('annual-zeros-1961.xlsx', sheet_name = 'summary')
 benchmark = DF['Benchmark'].values
 target = DF['Target'].values
 vol = DF['Volatility'].values
