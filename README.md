@@ -1,3 +1,5 @@
+Yet another update: the folder 5model contains all code, the data file is data2025.xlsx
+
 The code and data for my-finance.org foundational blog posts 
 
 https://my-finance.org/2026/08/14/including-bond-factors-into-the-new-gaussian-model/ 
