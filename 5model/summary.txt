@@ -16,3 +16,5 @@ fit.py fitting all these regressions and printing Bayes covariance matrices for 
 bayes.py objective Bayes simulation; app.py printing PDF and PNG output; test.py is execute all the above
 
 Each has 10000 simulations. Classic simulator is fine, but the Bayes one explodes
+
+The data file data2025.xlsx is here, similar to the data file with the same name in the general folder but with improved readme sheet
