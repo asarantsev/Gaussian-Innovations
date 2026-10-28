@@ -1,4 +1,4 @@
-Yet another update: the folder 5model contains all code, the data file is data2025.xlsx
+Yet another update: the folder 5model contains all code and see the summary.txt file there
 
 The code and data for my-finance.org foundational blog posts 
 
