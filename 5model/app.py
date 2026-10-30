@@ -8,7 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
-NSIMS = 10000
+NSIMS = 10**4
 
 # number of displayed simulations on the graph
 NDISPLAYS = 5
