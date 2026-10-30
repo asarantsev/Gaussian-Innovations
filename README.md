@@ -1,4 +1,7 @@
-Yet another update: the folder 5model contains all code and see the summary.txt file there
+
+The folders 5model and model6 contain all code and see the readme.txt files there. 5model has 3 asset classes: US and developed stocks, and US corporate bonds; and 2 factors: volatility and rate. The number of noise dimensions is 5. model6 has 4 asset classes: US and developed stocks, US corproate and long-term Treasury bonds; and 3 factors: volatility for stocks, and rates for both bonds. We say model6 since it has 6 noise terms not 7: Returns of Treasury bonds are deterministic. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The code and data for my-finance.org foundational blog posts 
 
