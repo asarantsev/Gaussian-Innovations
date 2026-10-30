@@ -3,20 +3,14 @@
 
 import numpy as np
 from scipy.stats import yeojohnson as YJ
-np.random.seed(0)
 
 # covariance matrix of five noise terms
 C = 10**(-4) * np.array([[39.20, 7.74, -2.87, 1.63, -3.45], [7.74, 18.66, -1.07, -2.29, -0.35], [-2.87, -1.07, 2.36, 1.45, 1.09], [1.63, -2.29, 1.45, 7.18, -0.08], [-3.45, -0.35, 1.09, -0.08, 3.29]])
-NSIMS = 10000
+NSIMS = 10**4
 
 # inverse Yeo-Johnson transform with index -0.5
 def YJinv(y):
-    x = np.empty_like(y)
-    pos = y >= 0
-    neg = ~pos
-    x[pos] = np.power(1 + (-0.5) * y[pos], -2) - 1
-    x[neg] = 1 - np.power(1 - (2.5) * y[neg], 0.4)
-    return x 
+    return np.select([y < 0, (y >= 0) & (y < 1.6), y >= 1.6], [y, (1 - 0.5 * y)**(-2) - 1, 24 + 125 * (y - 1.6)])
 
 # main function to simulate returns of three asset classes
 def sim(initialVol, initialRate, T):
@@ -64,4 +58,3 @@ def sim(initialVol, initialRate, T):
     simAIntl = np.exp(simIntl) - np.ones((T, NSIMS))
     
     return [simAStock, simAIntl, simABond]
-
