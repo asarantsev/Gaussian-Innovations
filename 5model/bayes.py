@@ -6,7 +6,7 @@ from scipy.stats import yeojohnson as YJ
 
 # covariance matrix of five noise terms
 C = 10**(-4) * np.array([[39.20, 7.74, -2.87, 1.63, -3.45], [7.74, 18.66, -1.07, -2.29, -0.35], [-2.87, -1.07, 2.36, 1.45, 1.09], [1.63, -2.29, 1.45, 7.18, -0.08], [-3.45, -0.35, 1.09, -0.08, 3.29]])
-NSIMS = 10**4
+NSIMS = 400
 
 covVol = np.linalg.inv(np.array([[97, 85.34], [85.34, 75.66]]))
 covRate = np.linalg.inv(np.array([[98, 122.5], [122.5, 154.8]]))
