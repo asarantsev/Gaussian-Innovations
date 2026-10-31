@@ -1,5 +1,6 @@
 from bayes import simBayes
-from classic import sim
+from classic import simClassic
+from lite import simLite
 from app import output
 
 T = 40
@@ -14,5 +15,6 @@ bondEnd = 0.4
 intlShare = 0.3
 trShare = 0.4
 
-output(sim(initialV, initialR, initialL, T), initialW, initialFlow, growthFlow, T, bondStart, bondEnd, intlShare, trShare, initialV, initialR, initialL, 'output-classic')
-output(simBayes(initialV, initialR, initialL, T), initialW, initialFlow, growthFlow, T, bondStart, bondEnd, intlShare, trShare, initialV, initialR, initialL, 'output-bayes')
+output(simClassic(initialV, initialR, initialL, T), initialW, initialFlow, growthFlow, T, bondStart, bondEnd, intlShare, trShare, initialV, initialR, initialL, 'classic')
+output(simBayes(initialV, initialR, initialL, T), initialW, initialFlow, growthFlow, T, bondStart, bondEnd, intlShare, trShare, initialV, initialR, initialL, 'bayes')
+output(simLite(initialV, initialR, initialL, T), initialW, initialFlow, growthFlow, T, bondStart, bondEnd, intlShare, trShare, initialV, initialR, initialL, 'lite')
