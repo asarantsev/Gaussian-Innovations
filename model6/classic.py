@@ -12,6 +12,7 @@ from scipy.stats import yeojohnson as YJ
 C = 10**(-4) * np.array([[39.20, 7.74, -2.87, 1.63, -3.45, 97.94], [7.74, 18.66, -1.07, -2.29, -0.35, -15.08], [-2.87, -1.07, 2.36, 1.45, 1.09, -15.42], [1.63, -2.29, 1.45, 7.18, -0.08, 55.47], [-3.45, -0.35, 1.09, -0.08, 3.29, -31.47], [97.94, -15.08, -15.42, 55.47, -31.47, 1657.54]])
 NSIMS = 400
 DIM = 6
+N = 98 # number of original data points for residuals
 
 # returns of coupon Treasury bonds
 def zeroRet(last, new):
@@ -22,7 +23,7 @@ def YJinv(y):
     return np.select([y < 0, (y >= 0) & (y < 1.6), y >= 1.6], [y, (1 - 0.5 * y)**(-2) - 1, 24 + 125 * (y - 1.6)])
 
 # main function to simulate returns of three asset classes
-def sim(initialVol, initialRate, initialLong, T):
+def simClassic(initialVol, initialRate, initialLong, T):
     initialTRate = YJ(initialRate, -0.5) 
     initialTVol = YJ(np.log(initialVol), -0.5)
     initialTLong = YJ(initialLong, -0.5)
